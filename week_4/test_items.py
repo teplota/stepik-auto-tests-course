@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 
 def test_presense_of_add_button(browser):
     """
@@ -17,7 +19,10 @@ def test_presense_of_add_button(browser):
     browser.get(link)
 
     # проверить наличие кнопки "добавить в корзину"
-
-    add_button = WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#add_to_basket_form .btn-add-to-basket')))
-    assert add_button,  'Кнопка добавления товара отсутствует'
-
+    def check_button():
+        try:
+            WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#add_to_basket_form button')))
+        except TimeoutException:
+            return False
+        return True
+    assert check_button(),  'Кнопка добавления товара отсутствует'
