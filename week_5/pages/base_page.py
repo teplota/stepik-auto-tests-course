@@ -17,3 +17,7 @@ class BasePage():
             return False
         return True
 
+    def current_url (self, browser)
+        browser.switch_to_window(browser.window_handles[1])
+        current_url = browser.current_url
+        return(current_url)
