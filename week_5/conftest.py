@@ -22,3 +22,14 @@ def browser(request):
     print("\nquit browser..")
     browser.quit()
 
+@pytest.fixture(scope="function")
+def registration_text(request):
+    user_language = request.config.getoption('language')
+    registration_text = {
+        'en-gb': 'Thanks for registering!',
+        'de': 'Danke für Ihre Registrierung!',
+        'es': 'Gracias por registrarse!',
+        'fr': 'Merci de vous être enregistré !',
+        'ru': 'Спасибо за регистрацию!'
+    }
+    return registration_text[user_language]
