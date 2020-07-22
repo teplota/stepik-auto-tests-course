@@ -26,11 +26,8 @@ def browser(request):
 def registration_text(request):
     user_language = request.config.getoption('language')
     registration_text = {
-        'en-gb': 'Thanks for registering!',
-        'de': 'Danke für Ihre Registrierung!',
-        'es': 'Gracias por registrarse!',
-        'fr': 'Merci de vous être enregistré !',
-        'ru': 'Спасибо за регистрацию!'
+        'en-gb': '×\nThanks for registering!',
+        'ru': '×\nСпасибо за регистрацию!'
     }
     return registration_text[user_language]
 
@@ -39,9 +36,6 @@ def error_registration_text(request):
     user_language = request.config.getoption('language')
     error_registration_text = {
         'en-gb': 'Oops! We found some errors - please check the error messages below and try again',
-        'de': 'Ups! Es sind Fehler aufgetreten - bitte korrigieren Sie die untenstehenden Fehler und versuchen Sie es erneut',
-        'es': 'Oops! Encontramos algunos errores - Por favor, comprueba el mensaje de error siguiente e inténtalo de nuevo',
-        'fr': "Oups ! Nous avons trouvé des erreurs - veuillez vérifier les messages d'erreur ci-dessous et réessayer",
         'ru': 'Опаньки! Мы нашли какие-то ошибки - пожалуйста, проверьте сообщения об ошибках ниже и попробуйте еще раз'
     }
     return error_registration_text[user_language]
@@ -51,7 +45,7 @@ def error_registration_message_below_email_already_exist(request):
     user_language = request.config.getoption('language')
     error_registration_message_below_email_already_exist = {
         'en-gb': "A user with that email address already exists",
-        'ru': 'Два поля с паролями не совпадают.'
+        'ru': 'Пользователь с таким адресом электронной почты уже зарегистрирован.'
     }
     return error_registration_message_below_email_already_exist[user_language]
 
@@ -65,14 +59,27 @@ def error_registration_message_below_password_did_not_match(request):
     return error_registration_message_below_password_did_not_match[user_language]
 
 @pytest.fixture(scope="function")
-def email_already_exist():
-    email_already_exist = 'dohapa4146@lefaqr5.com' #Зарегистрированный ранее пользователь
-    return email_already_exist
+def welcome_massage_when_user_login(request):
+    user_language = request.config.getoption('language')
+    welcome_massage_when_user_login = {
+        'en-gb': "×\nWelcome back",
+        'ru': '×\nРады видеть вас снова'
+    }
+    return welcome_massage_when_user_login[user_language]
 
 @pytest.fixture(scope="function")
-def password_already_exist():
-    password_already_exist = 'Selenium111'          #Пароль зарегистрированого ранее пользователя
-    return password_already_exist
+def empty_basket_message(request):
+    user_language = request.config.getoption('language')
+    welcome_massage_when_user_login = {
+        'en-gb': "Your basket is empty. Continue shopping",
+        'ru': 'Ваша корзина пуста Продолжить покупки'
+    }
+    return welcome_massage_when_user_login[user_language]
+
+@pytest.fixture(scope="function")
+def email_already_exist():
+    email_already_exist = 'dohapa41467@lefaqr5.com'  # Зарегистрированный ранее пользователь, пароль veryHardP147
+    return email_already_exist
 
 @pytest.fixture(scope="function")
 def email_invalid():
@@ -81,7 +88,7 @@ def email_invalid():
 
 @pytest.fixture(scope="function")
 def password_valid():
-    password_valid = 'veryHardP147'
+    password_valid = 'veryHardP147'                 # Валидный пароль, такой же у зарегистрированного пользователя
     return password_valid
 
 @pytest.fixture(scope="function")
