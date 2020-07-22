@@ -3,7 +3,6 @@ from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
 import pytest
 import time
-from random import randint
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -52,11 +51,10 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
 
 class TestUserAddToBasketFromProductPage():
     @pytest.fixture(scope="function", autouse=True)
-    def setup(self, browser, password_valid):
+    def setup(self, browser, email, password_valid):
         link = "http://selenium1py.pythonanywhere.com/accounts/login/"
         page = LoginPage(browser, link)
         page.open()
-        email = f'new_email-{randint(1, 10000)}@email.com'
         password1 = password2 = password_valid
         page.new_user_registration(email, password1, password2)
         page.should_be_authorized_user()
@@ -69,4 +67,3 @@ class TestUserAddToBasketFromProductPage():
         page.add_product_to_basket()
         assert page.product_title() == page.should_be_message_product_title(), "'Product added' message  is wrong"
         assert page.product_price() == page.should_be_message_product_price(), "'Basket price' message  is wrong"
-
