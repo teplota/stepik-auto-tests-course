@@ -37,6 +37,7 @@ def error_registration_text(request):
     user_language = request.config.getoption('language')
     error_registration_text = {
         'en-gb': 'Oops! We found some errors - please check the error messages below and try again',
+        'en': 'Oops! We found some errors - please check the error messages below and try again',
         'ru': 'Опаньки! Мы нашли какие-то ошибки - пожалуйста, проверьте сообщения об ошибках ниже и попробуйте еще раз'
     }
     return error_registration_text[user_language]
@@ -46,6 +47,7 @@ def error_registration_message_below_email_already_exist(request):
     user_language = request.config.getoption('language')
     error_registration_message_below_email_already_exist = {
         'en-gb': "A user with that email address already exists",
+        'en': "A user with that email address already exists",
         'ru': 'Пользователь с таким адресом электронной почты уже зарегистрирован.'
     }
     return error_registration_message_below_email_already_exist[user_language]
@@ -55,6 +57,7 @@ def error_registration_message_below_password_did_not_match(request):
     user_language = request.config.getoption('language')
     error_registration_message_below_password_did_not_match = {
         'en-gb': "The two password fields didn't match.",
+        'en': "The two password fields didn't match.",
         'ru': 'Два поля с паролями не совпадают.'
     }
     return error_registration_message_below_password_did_not_match[user_language]
@@ -64,6 +67,7 @@ def error_registration_message_below_password_is_too_short(request):
     user_language = request.config.getoption('language')
     error_registration_message_below_password_is_too_short = {
         'en-gb': "This password is too short. It must contain at least 9 characters.",
+        'en': "This password is too short. It must contain at least 9 characters.",
         'ru': 'Введённый пароль слишком короткий. Он должен содержать как минимум 9 символов.'
     }
     return error_registration_message_below_password_is_too_short[user_language]
@@ -73,16 +77,17 @@ def error_registration_message_below_password_is_too_common(request):
     user_language = request.config.getoption('language')
     error_registration_message_below_password_is_too_common = {
         'en-gb': "This password is too common.",
+        'en': "This password is too common.",
         'ru': 'Введённый пароль слишком широко распространён.'
     }
     return error_registration_message_below_password_is_too_common[user_language]
-
 
 @pytest.fixture(scope="function")
 def welcome_massage_when_user_login(request):
     user_language = request.config.getoption('language')
     welcome_massage_when_user_login = {
         'en-gb': "×\nWelcome back",
+        'en': "×\nWelcome back",
         'ru': '×\nРады видеть вас снова'
     }
     return welcome_massage_when_user_login[user_language]
@@ -92,11 +97,10 @@ def empty_basket_message(request):
     user_language = request.config.getoption('language')
     welcome_massage_when_user_login = {
         'en-gb': "Your basket is empty. Continue shopping",
+        'en': "Your basket is empty. Continue shopping",
         'ru': 'Ваша корзина пуста Продолжить покупки'
     }
     return welcome_massage_when_user_login[user_language]
-
-
 
 @pytest.fixture(scope="function")
 def email_already_exist():
@@ -128,3 +132,17 @@ def password_common():
     password_common = 'qwerty123'
     return password_common
 
+@pytest.fixture(scope="function")
+def link_login():
+    link_login = 'http://selenium1py.pythonanywhere.com/accounts/login/'
+    return link_login
+
+@pytest.fixture(scope="function")
+def link_main():
+    link_main = 'http://selenium1py.pythonanywhere.com/'
+    return link_main
+
+@pytest.fixture(scope="function")
+def link_product():
+    link_product = 'http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/'
+    return link_product
