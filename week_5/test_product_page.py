@@ -30,9 +30,8 @@ def test_guest_can_add_product_to_basket(browser, link):
 
 
 @pytest.mark.need_review
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, empty_basket_message):
-    link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
-    page = ProductPage(browser, link)
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link_product, empty_basket_message):
+    page = ProductPage(browser, link_product)
     page.open()                                                                                                         # Гость открывает страницу товара
     page.go_to_basket_page()                                                                                            # Переходит в корзину по кнопке в шапке
     basket_page = BasketPage(browser, browser.current_url)
@@ -40,9 +39,8 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, empt
     assert empty_basket_message == basket_page.should_be_message_empty_basket(), "'Basket price' message  is wrong"     # Ожидаем, что есть текст о том что корзина пуста
 
 @pytest.mark.need_review
-def test_guest_can_go_to_login_page_from_product_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
-    page = ProductPage(browser, link)
+def test_guest_can_go_to_login_page_from_product_page(browser, link_product):
+    page = ProductPage(browser, link_product)
     page.open()
     page.go_to_login_page()
     login_page = LoginPage(browser, browser.current_url)
@@ -51,18 +49,17 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
 
 class TestUserAddToBasketFromProductPage():
     @pytest.fixture(scope="function", autouse=True)
-    def setup(self, browser, email, password_valid):
-        link = "http://selenium1py.pythonanywhere.com/accounts/login/"
-        page = LoginPage(browser, link)
+    def setup(self, browser, link_login, email, password_valid):
+        page = LoginPage(browser, link_login)
         page.open()
         password1 = password2 = password_valid
         page.new_user_registration(email, password1, password2)
         page.should_be_authorized_user()
 
+
     @pytest.mark.need_review
-    def test_user_can_add_product_to_basket(self, browser):
-        product_link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
-        page = ProductPage(browser, product_link)
+    def test_user_can_add_product_to_basket(self, browser, link_product):
+        page = ProductPage(browser, link_product)
         page.open()
         page.add_product_to_basket()
         assert page.product_title() == page.should_be_message_product_title(), "'Product added' message  is wrong"
