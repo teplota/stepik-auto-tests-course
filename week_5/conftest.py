@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from random import randint
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='Chrome')
@@ -59,6 +60,25 @@ def error_registration_message_below_password_did_not_match(request):
     return error_registration_message_below_password_did_not_match[user_language]
 
 @pytest.fixture(scope="function")
+def error_registration_message_below_password_is_too_short(request):
+    user_language = request.config.getoption('language')
+    error_registration_message_below_password_is_too_short = {
+        'en-gb': "This password is too short. It must contain at least 9 characters.",
+        'ru': 'Введённый пароль слишком короткий. Он должен содержать как минимум 9 символов.'
+    }
+    return error_registration_message_below_password_is_too_short[user_language]
+
+@pytest.fixture(scope="function")
+def error_registration_message_below_password_is_too_common(request):
+    user_language = request.config.getoption('language')
+    error_registration_message_below_password_is_too_common = {
+        'en-gb': "This password is too common.",
+        'ru': 'Введённый пароль слишком широко распространён.'
+    }
+    return error_registration_message_below_password_is_too_common[user_language]
+
+
+@pytest.fixture(scope="function")
 def welcome_massage_when_user_login(request):
     user_language = request.config.getoption('language')
     welcome_massage_when_user_login = {
@@ -76,6 +96,8 @@ def empty_basket_message(request):
     }
     return welcome_massage_when_user_login[user_language]
 
+
+
 @pytest.fixture(scope="function")
 def email_already_exist():
     email_already_exist = 'dohapa41467@lefaqr5.com'  # Зарегистрированный ранее пользователь, пароль veryHardP147
@@ -83,8 +105,13 @@ def email_already_exist():
 
 @pytest.fixture(scope="function")
 def email_invalid():
-    email_invalid = '111'
+    email_invalid = '111@111'
     return email_invalid
+
+@pytest.fixture(scope="function")
+def email():
+    email = f'new_email-{randint(1, 10000)}@email.com'
+    return email
 
 @pytest.fixture(scope="function")
 def password_valid():
@@ -92,9 +119,12 @@ def password_valid():
     return password_valid
 
 @pytest.fixture(scope="function")
-def password_invalid():
-    password_invalid = '111'
-    return password_invalid
+def password_short():
+    password_short = 'ads'
+    return password_short
 
-
+@pytest.fixture(scope="function")
+def password_common():
+    password_common = 'qwerty123'
+    return password_common
 
