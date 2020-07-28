@@ -114,7 +114,7 @@ def email_invalid():
 
 @pytest.fixture(scope="function")
 def email():
-    email = f'new_email-{randint(1, 10000)}@email.com'
+    email = f'test_new_email-{randint(1, 10000)}@email.com'
     return email
 
 @pytest.fixture(scope="function")
@@ -146,3 +146,55 @@ def link_main():
 def link_product():
     link_product = 'http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/'
     return link_product
+
+@pytest.fixture(scope="function")
+def test_first_name():
+    test_first_name = "Ivan"
+    return test_first_name
+
+@pytest.fixture(scope="function")
+def test_last_name():
+    test_last_name = "Ivanov"
+    return test_last_name
+
+@pytest.fixture(scope="function")
+def test_first_lane_address():
+    test_first_lane_address = "Prospekt Prospektov 1"
+    return test_first_lane_address
+
+@pytest.fixture(scope="function")
+def test_city():
+    test_city = "Big-City"
+    return test_city
+
+@pytest.fixture(scope="function")
+def postcode():
+    postcode = "199999"
+    return postcode
+
+@pytest.fixture(scope="function")
+def country():
+    country = "Russian Federation"
+    return country
+
+@pytest.fixture(scope="function")
+def product_title():
+    product_title = "The shellcoder's handbook"
+    return product_title
+
+@pytest.fixture(scope="function")
+def product_price():
+    product_price = "£9.99"
+    return product_price
+
+@pytest.fixture(scope="function")
+def order_confirmation_message(request):
+    user_language = request.config.getoption('language')
+    order_confirmation_message = {
+        'en-gb': "Your order has been placed and a confirmation email has been sent - your order number is",
+        'en': "Your order has been placed and a confirmation email has been sent - your order number is",
+        'ru': 'Ваш заказ был размещен и выслано сообщение с подтверждением - номер вашего заказа'
+    }
+    return order_confirmation_message[user_language]
+
+
