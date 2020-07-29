@@ -2,10 +2,6 @@ from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
 import pytest
-import time
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
 
 @pytest.mark.need_review
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -28,6 +24,24 @@ def test_guest_can_add_product_to_basket(browser, link):
     assert page.product_title() == page.should_be_message_product_title(), "'Product added' message  is wrong"
     assert page.product_price() == page.should_be_message_product_price(), "'Basket price' message  is wrong"
 
+@pytest.mark.xfail
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser, link_product):
+    page = ProductPage(browser, link_product)
+    page.open()                                                                                                         # Открываем страницу товара
+    page.add_product_to_basket()                                                                                        # Добавляем товар в корзину
+    page.should_not_be_success_message()                                                                                # Проверяем, что нет сообщения об успехе
+
+def test_guest_cant_see_success_message(browser, link_product):
+    page = ProductPage(browser, link_product)
+    page.open()                                                                                                         # Открываем страницу товара
+    page.should_not_be_success_message()                                                                                # Проверяем, что нет сообщения об успехе
+
+@pytest.mark.xfail
+def test_message_disappeared_after_adding_product_to_basket(browser, link_product):
+    page = ProductPage(browser, link_product)
+    page.open()                                                                                                         # Открываем страницу товара
+    page.add_product_to_basket()                                                                                        # Добавляем товар в корзину
+    page.should_disappeared_success_message()                                                                           # Проверяем, что нет сообщения об успехе
 
 @pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link_product, empty_basket_message):
