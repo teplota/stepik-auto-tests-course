@@ -4,8 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from .locators import BasePageLocators
-
-
 import math
 
 class BasePage():
@@ -32,6 +30,14 @@ class BasePage():
         except TimeoutException:
             return True
         return False
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
 
     def check_current_url(self):
         url = self.browser.current_url
@@ -63,6 +69,10 @@ class BasePage():
     def go_to_basket_page(self):
         login_link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
         login_link.click()
+
+    def go_to_checkout_page(self):
+        checkout_link = self.browser.find_element(*BasePageLocators.CHECKOUT_LINK)
+        checkout_link.click()
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
