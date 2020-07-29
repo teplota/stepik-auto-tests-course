@@ -1,6 +1,5 @@
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
-from .pages.basket_page import BasketPage
 from .pages.checkout_page import CheckoutPage
 from .pages.base_page import BasePage
 import pytest
@@ -19,7 +18,7 @@ class TestUserCheckout():
         page.new_user_registration(email, password1, password2)
         page.should_be_authorized_user()
 
-    @pytest.mark.need_review
+    @pytest.mark.need_review_custom_scenarios
     def test_user_can_order_product_from_product_page(self, browser, link_product, product_title, product_price, order_confirmation_message, test_first_name, test_last_name, test_first_lane_address, test_city, postcode, country):
         page = ProductPage(browser, link_product)
         page.open()
