@@ -19,7 +19,7 @@ class ProductPage(BasePage):
         return product_title
 
     def should_be_message_product_price(self):
-        assert self.is_element_present(*ProductPageLocators.MESSAGE_PRICE), "'Basket price' message is not presented"  # Проверяем наличие сообщения со стоимость корзины
+        assert self.is_element_present(*ProductPageLocators.MESSAGE_PRICE), "'Basket price' message is not presented"   # Проверяем наличие сообщения со стоимость корзины
         message_product_price = self.element_text(*ProductPageLocators.MESSAGE_PRICE)
         return message_product_price
 
@@ -27,5 +27,14 @@ class ProductPage(BasePage):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_TITLE), "'Product added' message is not presented"  # Проверяем наличие сообщения, что товар добавлен в корзину
         message_product_title = self.element_text(*ProductPageLocators.MESSAGE_TITLE)
         return message_product_title
+
+    def should_not_be_success_message(self):                                                                            # Проверяем отсутствие сообщения об успешном добавлении
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_TITLE), \
+            "Success message is presented, but should not be"
+
+    def should_disappeared_success_message(self):                                                                       # Проверяем исчезновение сообщения об успешном добавлении
+        assert self.is_disappeared(*ProductPageLocators.MESSAGE_TITLE), \
+            "Success message is not disappeared"
+
 
 
