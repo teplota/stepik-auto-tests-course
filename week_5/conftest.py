@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from random import randint
+from datetime import datetime
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='Chrome')
@@ -20,6 +21,7 @@ def browser(request):
     else:
         print('Browser is not supported')
     yield browser
+    # получаем переменную с текущей датой и временем в формате ГГГГ-ММ-ДД_ЧЧ-ММ-СС
     print("\nquit browser..")
     browser.quit()
 
@@ -28,6 +30,7 @@ def registration_text(request):
     user_language = request.config.getoption('language')
     registration_text = {
         'en-gb': '×\nThanks for registering!',
+        'en': '×\nThanks for registering!',
         'ru': '×\nСпасибо за регистрацию!'
     }
     return registration_text[user_language]
